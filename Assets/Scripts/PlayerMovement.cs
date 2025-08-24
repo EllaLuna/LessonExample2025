@@ -7,12 +7,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpSpeed;
     bool isGrounded = true;
     float directionX;
+    Animator animator;
+    SpriteRenderer sprite;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         if (rb == null)
             Debug.LogError("Rigidbody is null!");
+        animator = GetComponent<Animator>();
+        if (animator == null)
+        {
+            Debug.LogError("Animator is null!");
+        }
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -22,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         {
             HandleJump();
         }
+        HandleMovementAnimations();
     }
 
     private void HandleJump()
@@ -41,6 +50,13 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = true;
         }
+    }
+
+    private void HandleMovementAnimations()
+    {
+        animator.SetFloat("Speed", rb.linearVelocity.x);
+        if (directionX != 0)
+            sprite.flipX = directionX < 0;
     }
 
     enum Movement

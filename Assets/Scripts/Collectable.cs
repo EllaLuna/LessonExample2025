@@ -5,20 +5,16 @@ public class Collectable : MonoBehaviour
 {
     [SerializeField] float delayForDestroy = 0.4f;
     [SerializeField] float waitForPlayer = 1f;
+    [SerializeField] int score = 1;
     SpriteRenderer sprite;
     bool playerNotReached = false;
     bool playerTouched = false;
+    ScoreManager scoreManager;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        scoreManager = FindFirstObjectByType<ScoreManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -27,6 +23,7 @@ public class Collectable : MonoBehaviour
         {
             playerTouched = true;
             sprite.color = Color.green;
+            scoreManager.UpdateScoreText(score);
             Destroy(gameObject, delayForDestroy);
             return;
         }
@@ -43,6 +40,7 @@ public class Collectable : MonoBehaviour
         {
             playerNotReached = true;
             sprite.color = Color.red;
+            scoreManager.UpdateScoreText(-score);
             Destroy(gameObject, delayForDestroy);
         }
     }
