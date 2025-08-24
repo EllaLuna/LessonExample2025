@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: 5337b4ead241aba4d8b4eaafb0bfb789
+  productGUID: db5b68709f5f57a47a09d21652f16bc5
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Example2025
+  productName: LessonExample2025
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -596,14 +596,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Example2025
+  metroPackageName: LessonExample2025
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Example2025
+  metroApplicationDescription: LessonExample2025
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -674,10 +674,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: c0bc4aee-592d-40c7-98d2-0d1180e1142e
+  cloudProjectId: ddce5d3f-bf03-4916-9f94-f094132243e7
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Example2025
+  projectName: LessonExample2025
   organizationId: xholycat
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
