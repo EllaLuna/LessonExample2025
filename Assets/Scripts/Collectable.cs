@@ -9,12 +9,10 @@ public class Collectable : MonoBehaviour
     SpriteRenderer sprite;
     bool playerNotReached = false;
     bool playerTouched = false;
-    ScoreManager scoreManager;
 
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-        scoreManager = FindFirstObjectByType<ScoreManager>();
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -23,7 +21,7 @@ public class Collectable : MonoBehaviour
         {
             playerTouched = true;
             sprite.color = Color.green;
-            scoreManager.UpdateScoreText(score);
+            Events.OnScoreUpdate?.Invoke(score);
             Destroy(gameObject, delayForDestroy);
             return;
         }
@@ -40,7 +38,7 @@ public class Collectable : MonoBehaviour
         {
             playerNotReached = true;
             sprite.color = Color.red;
-            scoreManager.UpdateScoreText(-score);
+            Events.OnScoreUpdate?.Invoke(-score);
             Destroy(gameObject, delayForDestroy);
         }
     }

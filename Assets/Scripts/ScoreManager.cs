@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,12 +12,18 @@ public class ScoreManager : MonoBehaviour
     {
         scoreText = GetComponent<TextMeshProUGUI>();
         scoreText.text = $"{scorePrefix}{currentScore}";
+        Events.OnScoreUpdate += UpdateScoreText;
     }
 
-    public void UpdateScoreText(int scoreToAdd)
+    private void UpdateScoreText(int scoreToAdd)
     {
         scoreToAdd += currentScore;
         currentScore = scoreToAdd < 0 ? 0 : scoreToAdd;
         scoreText.text = $"{scorePrefix}{currentScore}";
+    }
+
+    private void OnDestroy()
+    {
+        Events.OnScoreUpdate -= UpdateScoreText;
     }
 }

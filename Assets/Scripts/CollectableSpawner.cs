@@ -13,7 +13,6 @@ public class CollectableSpawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnCoinsOverTime());
-        InvokeRepeating(nameof(ExampleFunc), 0f, 10f);
     }
 
     IEnumerator SpawnCoinsOverTime()
@@ -24,10 +23,7 @@ public class CollectableSpawner : MonoBehaviour
             Instantiate(collectablePrefab, GetRandomSpawnPoint(), Quaternion.identity);
         }
     }
-    private void ExampleFunc()
-    {
-        Debug.Log("Repeated");
-    }
+
     private Vector2 GetRandomSpawnPoint()
     {
         return new Vector2(Random.Range(minBound.position.x, maxBound.position.x), minBound.position.y);

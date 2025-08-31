@@ -13,14 +13,19 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-            Debug.LogError("Rigidbody is null!");
+        ValidateComponent(rb, nameof(rb));
         animator = GetComponent<Animator>();
-        if (animator == null)
-        {
-            Debug.LogError("Animator is null!");
-        }
+        ValidateComponent(animator, nameof(animator));
         sprite = GetComponent<SpriteRenderer>();
+        ValidateComponent(sprite, nameof(sprite));
+    }
+
+    private void ValidateComponent<T>(T component, string name)
+    {
+        if(component is null)
+        {
+            Debug.LogError($"{name} is null!");
+        }
     }
 
     void Update()
@@ -36,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     private void HandleJump()
     {
         isGrounded = false;
+        animator.SetTrigger("IsJumping");
         rb.AddForce(Vector2.up * jumpSpeed, ForceMode2D.Impulse);
     }
 
