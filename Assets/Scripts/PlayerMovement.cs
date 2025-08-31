@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb;
+    [SerializeField] float sprintMod = 1.5f;
     [SerializeField] float speed;
     [SerializeField] float jumpSpeed;
     bool isGrounded = true;
@@ -23,6 +24,24 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Player.Move.performed += OnMovePerformed;
         inputActions.Player.Move.canceled += OnMoveCanceled;
         inputActions.Player.Jump.performed += OnJumpPerformed;
+        inputActions.Player.ChangeColor.performed += OnChangeColorPerformed;
+        inputActions.Player.Sprint.started += OnSprintStarted;
+        inputActions.Player.Sprint.canceled += OnSprintCanceled;
+    }
+
+    private void OnSprintCanceled(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        speed /= sprintMod;
+    }
+
+    private void OnSprintStarted(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        speed *= sprintMod;
+    }
+
+    private void OnChangeColorPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        sprite.color = UnityEngine.Random.ColorHSV();
     }
 
     private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
@@ -96,5 +115,8 @@ public class PlayerMovement : MonoBehaviour
         inputActions.Player.Move.performed -= OnMovePerformed;
         inputActions.Player.Move.canceled -= OnMoveCanceled;
         inputActions.Player.Jump.performed -= OnJumpPerformed;
+        inputActions.Player.ChangeColor.performed -= OnChangeColorPerformed;
+        inputActions.Player.Sprint.started -= OnSprintStarted;
+        inputActions.Player.Sprint.canceled -= OnSprintCanceled;
     }
 }
