@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,6 +10,35 @@ public class PlayerMovement : MonoBehaviour
     float directionX;
     Animator animator;
     SpriteRenderer sprite;
+    InputSystem inputActions;
+
+    private void Awake()
+    {
+        inputActions = new();
+    }
+
+    private void OnEnable()
+    {
+        inputActions.Player.Enable();
+        inputActions.Player.Move.performed += OnMovePerformed;
+        inputActions.Player.Move.canceled += OnMoveCanceled;
+        inputActions.Player.Jump.performed += OnJumpPerformed;
+    }
+
+    private void OnJumpPerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        if (!isGrounded) return;
+
+        HandleJump();
+    }
+
+    private void OnMoveCanceled(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+  => directionX = 0;
+
+    private void OnMovePerformed(UnityEngine.InputSystem.InputAction.CallbackContext ctx)
+    {
+        directionX = ctx.ReadValue<Vector2>().x;
+    }
 
     void Start()
     {
@@ -22,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ValidateComponent<T>(T component, string name)
     {
-        if(component is null)
+        if (component is null)
         {
             Debug.LogError($"{name} is null!");
         }
@@ -30,11 +60,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        directionX = Input.GetAxis(nameof(Movement.Horizontal));
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            HandleJump();
-        }
         HandleMovementAnimations();
     }
 
@@ -65,9 +90,11 @@ public class PlayerMovement : MonoBehaviour
             sprite.flipX = directionX < 0;
     }
 
-    enum Movement
+    private void OnDisable()
     {
-        Horizontal,
-        Vertical
+        inputActions.Player.Disable();
+        inputActions.Player.Move.performed -= OnMovePerformed;
+        inputActions.Player.Move.canceled -= OnMoveCanceled;
+        inputActions.Player.Jump.performed -= OnJumpPerformed;
     }
 }
