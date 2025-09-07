@@ -1235,6 +1235,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectablePrefab: {fileID: 1957195054416350488, guid: c90153e9f68bb954082843639a028f30, type: 3}
+  collectableDatas:
+  - {fileID: 11400000, guid: cd6dff29855731041b0b4f6b3e526e61, type: 2}
+  - {fileID: 11400000, guid: 86f577cb914ab2c4284fe5b5ae82169a, type: 2}
+  - {fileID: 11400000, guid: 5d59827f2c0e2fd4b897cb003eb080f1, type: 2}
   spawnAmount: 10
   spawnDelayMin: 0.1
   spawnDelayMax: 0.5

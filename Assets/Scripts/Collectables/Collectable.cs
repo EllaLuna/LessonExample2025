@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
-    [SerializeField] float delayForDestroy = 0.4f;
-    [SerializeField] float waitForPlayer = 1f;
-    [SerializeField] int score = 1;
+    [SerializeField] CollectableData collectableData;
     SpriteRenderer sprite;
     bool playerNotReached = false;
     bool playerTouched = false;
@@ -13,6 +11,7 @@ public class Collectable : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        sprite.sprite = collectableData.sprite;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -21,8 +20,8 @@ public class Collectable : MonoBehaviour
         {
             playerTouched = true;
             sprite.color = Color.green;
-            Events.OnScoreUpdate?.Invoke(score);
-            Destroy(gameObject, delayForDestroy);
+            Events.OnScoreUpdate?.Invoke(collectableData.score);
+            Destroy(gameObject, collectableData.delayForDestroy);
             return;
         }
         if (other.gameObject.CompareTag("Ground"))
@@ -31,15 +30,20 @@ public class Collectable : MonoBehaviour
         }
     }
 
+    public void SetCollectableData(CollectableData collectableData)
+    {
+        this.collectableData = collectableData;
+    }
+
     IEnumerator DelayDestruction()
     {
-        yield return new WaitForSeconds(waitForPlayer);
+        yield return new WaitForSeconds(collectableData.waitForPlayer);
         if (!playerTouched)
         {
             playerNotReached = true;
             sprite.color = Color.red;
-            Events.OnScoreUpdate?.Invoke(-score);
-            Destroy(gameObject, delayForDestroy);
+            Events.OnScoreUpdate?.Invoke(-collectableData.score);
+            Destroy(gameObject, collectableData.delayForDestroy);
         }
     }
 }

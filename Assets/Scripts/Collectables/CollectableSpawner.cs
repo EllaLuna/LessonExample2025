@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class CollectableSpawner : MonoBehaviour
 {
     [SerializeField] GameObject collectablePrefab;
+    [SerializeField] CollectableData[] collectableDatas;
     [SerializeField] int spawnAmount = 10;
     [SerializeField] float spawnDelayMin = 0.1f;
     [SerializeField] float spawnDelayMax = 0.5f;
@@ -20,7 +22,9 @@ public class CollectableSpawner : MonoBehaviour
         for (int i = 0; i < spawnAmount; i++)
         {
             yield return new WaitForSeconds(Random.Range(spawnDelayMin, spawnDelayMax));
-            Instantiate(collectablePrefab, GetRandomSpawnPoint(), Quaternion.identity);
+            var collectable = Instantiate(collectablePrefab, GetRandomSpawnPoint(), Quaternion.identity)
+                .GetComponent<Collectable>();
+            collectable.SetCollectableData(collectableDatas[Random.Range(0, collectableDatas.Length)]);
         }
     }
 
