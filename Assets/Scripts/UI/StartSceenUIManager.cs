@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -23,6 +24,7 @@ public class StartSceenUIManager : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(startButton.gameObject);
         AddButtonsListeners();
         ToggleCreditsScreen(false);
+        AssignNamedActionTransition();
     }
 
     private void AddButtonsListeners()
@@ -31,6 +33,20 @@ public class StartSceenUIManager : MonoBehaviour
         creditsButton.onClick.AddListener(() => ToggleCreditsScreen(true));
         backButton.onClick.AddListener(() => ToggleCreditsScreen(false));
         exitButton.onClick.AddListener(() => Application.Quit());
+    }
+
+    private void AssignNamedActionTransition()
+    {
+        var transitions = FindObjectsByType<NamedActionTransition>(FindObjectsSortMode.None);
+        var buttons = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
+        foreach (var transition in transitions)
+        {
+            var selectedButton = buttons.FirstOrDefault(x => x.name.Equals(transition.actionName));
+            if (selectedButton != null)
+            {
+                selectedButton.onClick.AddListener(transition.DoAction);
+            }
+        }
     }
 
     private void ToggleCreditsScreen(bool showCredits)

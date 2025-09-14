@@ -11,7 +11,7 @@ public class Collectable : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
-        sprite.sprite = collectableData.sprite;
+        sprite.sprite = collectableData?.sprite;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
