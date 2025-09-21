@@ -16,6 +16,7 @@ public class GameState : MonoBehaviour
     void Start()
     {
         transitions.AddRange(GetComponentsInChildren<TransitionBase>());
+        isCurrentState = Events.OnGetCurrentState?.Invoke() == this;
     }
 
     void Update()
@@ -54,6 +55,7 @@ public class GameState : MonoBehaviour
 
     private void StateEnter(GameState previousState)
     {
+        wasTransitionedInto = true;
         this.previousState = previousState;
         isCurrentState = true;
         Events.OnStateEnter?.Invoke(this);
